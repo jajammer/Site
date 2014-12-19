@@ -1,0 +1,51 @@
+If no .episema.log file exists when apache2 runs, it will create
+a file with www-data as the owner. This file will only be readable
+to anyone other than the owner. This means that when I start a
+script that tries to write to the log file it will fail.
+Vice versa, if I create a log file it will have me as the owner.
+When apache2 tries to write to the log file as www-data it will
+fail unless I've used chmod to give everyone write permissions.
+A workaround for this is to place this directory with a group
+of which I and apache2 are members.
+
+The insert method for Conn in tools will probably fail when I
+start working with floating point numbers. The method will
+handle them like strings instead of numbers.
+
+Separate databases so I can delete/remake some without affecting others.
+Have a database for accounts that contains name, password, e-mail where the
+ROWID is used as the player id (pid). Have a database for the world with all
+the places and what's connected to what. Have a database for players with all
+their stats/inventory. Players need to have the same row for their data across
+databases since the pid must match.
+
+Make a world_builder program. It should allow saving and loading different
+files so I can have back-ups. It would be easy to have an entity in the
+program so it can be at a place, then the creation of a child would
+automatically be added to that place. Perhaps make an entity class that has
+a location and can move. The Player class could then inherit from the entity.
+
+Make an admin page that would load the world_builder and provide a simple GUI.
+When making a child I could choose a size, then an X by X grid would be shown
+on the screen according the to chosen size. Each square in the grid would
+be a quick link to making a child at that square.
+
+Rewrite Player and World classes in tools so they're testable. Hopefully
+I can test everything through run_tests and not by hand.
+
+Have a test player (should only need name and password).
+Test if the player exists.
+Test creating a player if they don't.
+Test if the player exists.
+Test the player's surroundings (if parent exists, etc.).
+Test movement
+
+Switch the self.level value so it's for the database by default
+It would make it simple for parent being level-1, current being level,
+and child being level+1
+
+Add a make_target(...) function for Conn so all functions can select
+by more than one value
+
+Move the code that gets the player's level and ID from World to Player.
+The world should not require any references to Player like pid
